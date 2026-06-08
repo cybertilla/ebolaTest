@@ -177,7 +177,7 @@ end
 to-report relative-infection-rate-of-infection-status [is]
   ;anyone not infectious here
   if is = just-contaminated-infection-status or
-;  is = immune-infection-status or
+  is = immune-infection-status or
   is = healthy-infection-status or
   is = safely-buried-infection-status
   [report 0]
@@ -187,7 +187,7 @@ to-report relative-infection-rate-of-infection-status [is]
   
   ;phase 1 and 2 and deceased
   if is = pre-symptomatic-to-mild-infection-status
-;  or is = symptomatic-mild-infection-status
+  or is = symptomatic-mild-infection-status
   or is = mild-to-rec-infection-status [report 0.48]
   
   if is = infectious-stage-one-infection-status

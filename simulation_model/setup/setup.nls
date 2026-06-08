@@ -362,10 +362,12 @@ to setup-activities
     set non-essential-shops (turtle-set non-essential-shops self)
     set hired-workers (turtle-set)
     set gathering-type "non-essential-shop" set shape "face happy" set color violet + 2 set xcor 5 * max-pxcor / 10 set ycor max-pycor * count gathering-points with [gathering-type = "non-essential-shop"] / (#non-essential-shops-gp + 1)]
+  
   create-gathering-points #hospital-gp [
     set  hospitals (turtle-set  hospitals self)
     set hired-workers (turtle-set)
     set gathering-type "hospital" set shape "x" set heading 45 set color red set size 2 set xcor 6 * max-pxcor / 10 set ycor max-pycor * count gathering-points with [gathering-type = "hospital"] / (#hospital-gp + 1)]
+  
   create-gathering-points #public-leisure-gp [
     set public-leisure-points (turtle-set public-leisure-points self)
     set hired-workers (turtle-set)
@@ -379,7 +381,7 @@ to setup-activities
   create-gathering-points #burial-rites-gp [
     set burial-rites (turtle-set burial-rites self)
     set hired-workers (turtle-set)
-    set gathering-type "burial-rites" set shape "face sad" set color white + 3 set xcor 9 * max-pxcor / 10 set ycor max-pycor * count gathering-points with [gathering-type = "burial-rites"] / (#burial-rites-gp + 1)]
+    set gathering-type "burial-rites" set shape "face sad" set color white set xcor 8.5 * max-pxcor / 10 set ycor max-pycor * count gathering-points with [gathering-type = "burial-rites"] / (#burial-rites-gp + 1)]
 
   
   ask gathering-points [set hired-workers (turtle-set)] 
