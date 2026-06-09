@@ -1,12 +1,15 @@
 
-;; WHAT ARE THESE?
+;; WHAT ARE THESE? ok, process when agent infected and contagiousness
 
 to-report oxford-contagion-factor-between [infector susceptible context]
   let t [(ticks - time-when-infected)] of infector
   
   let I-a-s average-expected-number-of-interactions-for-age [age] of susceptible
+  
   let integral gamma-interal (t / 4) ((t + 1) / 4)
-  let R 5.75 * 2
+  
+  let R 5.75 * 2  ;is this the epidemiological R?
+  
   let s-a-s infection-scale-factor-per-age [age] of susceptible
   let a-s-i relative-infection-rate-of-infection-status [infection-status] of infector
   let B-n infection-rate-of context
@@ -20,7 +23,7 @@ to-report oxford-contagion-factor-between [infector susceptible context]
   report result
 end 
 
-
+;;higher for older population, this might be the severty of disease??? NOT SURE
 to-report infection-scale-factor-per-age [ag]
   if ag = young-age [ report mean (list 0.71  0.74)]
   if ag = student-age [ report mean (list 0.79)]
@@ -29,13 +32,16 @@ to-report infection-scale-factor-per-age [ag]
 end
 
 to-report average-expected-number-of-interactions-for-age [age-factor]
-  report 3 ;we won't break our head on it
+  report 5 ;this was previously 3 for assocc, heauristically changing to 5 for now - FIX LATER
 end
   
 
 to-report gamma-interal [start ending]
   report cdf-gamma-value-means-6-sd-2.5 start - cdf-gamma-value-means-6-sd-2.5 ending
 end
+
+
+;;im guessing this is a "countdown" because covid is immediately contagious even without symptoms?
 
 to-report cdf-gamma-value-means-6-sd-2.5 [t]
   

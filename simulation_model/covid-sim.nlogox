@@ -22,7 +22,7 @@ globals [
   import-scenario-name
   
   
-  stigma ; define later - urban rural woman man etc - affects agents epistemic model and actions
+  stigma ; define later - urban/rural woman/man etc - will be merged with agents epistemic model and actions, but use for sanity checks until then
   
 
 ]
@@ -34,6 +34,7 @@ to go
 ;  reset-economy-measurements
   
   ;rumor-mill ;define later how mis/information spreads
+  
   spread-contagion
   update-within-agent-disease-status
   update-people-mind

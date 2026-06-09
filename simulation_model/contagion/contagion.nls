@@ -12,9 +12,7 @@ to spread-contagion
   ;Increase transmission probability per contact with deceased; model funeral cluster events; resistance rate parameter ~40-70% in high-tension zones
   spread-by-funeral-rites ;(safe burials vs unsafe burials, depends on group affiliation and high-tension zones)
   ;
-  ;traditional-healing ;rural only
-  
-  
+  ;traditional-healing ;UNIMPLEMENTED
   
 end
 
@@ -27,7 +25,6 @@ end
 to spread-by-activity-proximity
   ask gathering-points with [not (self = away-gathering-point) and any? current-gatherers]
   [
-
     spread-within-a-set-of-people current-gatherers self
   ]
 end
@@ -66,7 +63,7 @@ to process-contacts-within-group-event [ts context]
   increment-contacts-due-to-group-gathering-global-metrics ts context
 end
 
-
+;WHAT ARE THE CONTEXTUAL MITIGATION FACTORS FOR EBOLA, IF ANY?
 to-report contextual-contagion-modificators
   report age-infection-risk-mitigation-factor * social-distancing-risk-mitigation-factor
 end
@@ -75,6 +72,8 @@ to-report social-distancing-risk-mitigation-factor
   ifelse is-I-apply-social-distancing? [report social-distancing-density-factor]
   [report 1]
 end
+
+
 
 
 ;; this process is a bit shitty as it does some mathematical merging of probability
@@ -123,7 +122,7 @@ to apply-risk-of-contamination [infector context]
   if  random-float 1 < contagion-risks and infection-status = healthy-infection-status
   [
     increment-contagion-metrics-from context self infector
-    contaminate infector context
+    contaminate infector context ;REMOVE CONTEXT AS NOR AIRBORNE
   ]
 end
 
