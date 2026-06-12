@@ -18,7 +18,7 @@ to-report ebola-contagion-factor-between [infector susceptible context]
   let R 5.75 * 2  ;is this the epidemiological R?
   
   let s-a-s infection-scale-factor ;of susceptible  NOT SURE WHY THIS DOES NOT WORK, MIGHT HAVE SOMETHING TO DO WITH AGENT PROPERTIES
-  let a-s-i relative-infection-rate-of-infection-status [infection-status] of infector
+  let a-s-i ebo-relative-infection-rate-of-infection-status [infection-status] of infector
   let B-n infection-rate-of context
   
   

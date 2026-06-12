@@ -1,6 +1,5 @@
-__includes ["contagion/oxford_contagion_factor.nls" "contagion/ebola_contagion_model.nls"]
+__includes ["contagion/oxford_contagion_factor.nls" "contagion/ebola_contagion_factor.nls"]
   ;;this contagion model should be revised by making contacts explicit and making contagion as a side-effect of contacts
-
 
 to spread-contagion
   
@@ -107,7 +106,7 @@ to-report age-infection-risk-mitigation-factor
 end
 
 to apply-risk-of-contamination-when-away
-  if random-float 1 < probability-infection-when-abroad * contextual-contagion-modificators and infection-status = healthy-infection-status
+  if random-float 1 < probability-infection-when-abroad * contextual-contagion-modificators and infection-status = susceptible-infection-status
   [
     increment-contagion-metrics-from "away" self nobody
     contaminate nobody "away"
@@ -119,10 +118,10 @@ to apply-risk-of-contamination [infector context]
   let contagion-risks risks-of-contamination infector self context
   
   ; show (sentence ticks contagion-risks lambda-when-contagion)
-  if  random-float 1 < contagion-risks and infection-status = healthy-infection-status
+  if  random-float 1 < contagion-risks and infection-status = susceptible-infection-status
   [
     increment-contagion-metrics-from context self infector
-    contaminate infector context ;REMOVE CONTEXT AS NOR AIRBORNE
+    contaminate infector context ;REMOVE CONTEXT AS NOT AIRBORNE
   ]
 end
 
@@ -133,27 +132,33 @@ to-report risks-of-contamination [infector susceptible context]
 end
 
 
-
+;mix of both diseases for now
 to-report relative-infection-rate-of-infection-status [is]
-  if is = just-contaminated-infection-status or
-  is = immune-infection-status or
-  is = healthy-infection-status or
-  is = dead-infection-status
-  [report 0]
+;   if 
+;   ;is = healthy-infection-status or
+;   is = "healthy" or
+;   is = susceptible-infection-status or
+;   is = "safe-burial" or
+;   is = just-exposed-infection-status
+;   [report 0]
+
+;   if 
+;   ;is = asymptomatic-to-rec-infection-status or
+;   is = hospitalised-to-immune-infection-status
+;   [report 0.29]
   
-  if is = asymptomatic-to-rec-infection-status [report 0.29]
+;   if 
+;   is = pre-symptomatic-to-mild-infection-status
+;   or is = symptomatic-mild-infection-status
+;   or is = mild-to-rec-infection-status [report 0.48]
   
-  if is = pre-symptomatic-to-mild-infection-status
-  or is = symptomatic-mild-infection-status
-  or is = mild-to-rec-infection-status [report 0.48]
-  
-  if is = pre-symptomatic-to-severe-infection-status or
-  is = symptomatic-severe-infection-status or
-  is = severe-to-hospital-infection-status or
-  is = severe-to-rec-infection-status or
-  is =  hospital-to-death-infection-status or
-  is = hospital-to-rec-infection-status
-  [report 1]
+;   if is = pre-symptomatic-to-severe-infection-status or
+;   is = symptomatic-severe-infection-status or
+;   is = severe-to-hospital-infection-status or
+;   is = severe-to-rec-infection-status or
+;   is =  hospital-to-death-infection-status or
+;   is = hospital-to-rec-infection-status
+;   [report 1]
   error (sentence "not implemented" infection-status)
 end
 
@@ -177,7 +182,7 @@ to-report ebo-relative-infection-rate-of-infection-status [is]
   
   ;phase 1 transition
   if is = stage-one-to-hospitalised-infection-status
-  or is = immune-infection-status ;; ADD STATE HERE IF THERE ARE ISOLATION PRACTICES THAT WORK
+  or is = hospitalised-to-immune-infection-status ;; ADD STATE HERE IF THERE ARE ISOLATION PRACTICES THAT WORK
   [report 0.5]
   
   if is = stage-one-to-non-hospitalised-infection-status
@@ -237,8 +242,8 @@ end
 ;;THIS IS VERY DIFFERENT FOR EBOLA!
 
 to-report is-contagious?
-  
-  report not (infection-status = healthy-infection-status) and not (infection-status = "immune") and not (infection-status = dead-infection-status)
+  report not (infection-status = susceptible-infection-status) and not (infection-status = "removed")
+;  report not (infection-status = healthy-infection-status) and not (infection-status = "immune") and not (infection-status = dead-infection-status)
 end
 
 to-report is-alive?

@@ -13,7 +13,7 @@ globals[#min-workers-in-adults-homes
   distribution-control-variable
 ]
 
-to setup
+to setup-covid
   clear-all
   reset-ticks
   
@@ -27,7 +27,7 @@ to setup
   set current-day 0
   set #dead-people 0
 ;; in ebola death does not prevent contagion
-  set list-of-dead-and-safely-buried-people []
+ ; set list-of-dead-and-safely-buried-people []
 
   set was-social-distancing-enforced? false
   set when-has-2%-infected-threshold-first-been-met? "never"
@@ -208,6 +208,9 @@ to-report my-starting-amount-of-capital
   if age = young-age[report 0]
 end
 
+
+;make new setup-person for ebola agents in setup-ebola
+
 to setup-person [current-home l-age]
   create-people 1 [
     set age l-age
@@ -235,8 +238,7 @@ to setup-person [current-home l-age]
     set current-person-I-depend-on nobody   ;;MOD FOR CARETAKING
     set color default-color
     set size 0.5
-;    set infection-state healthy-infection-status
-    set infection-state susceptible-infection-status
+    set infection-state healthy-infection-status
     set epistemic-infection-status "healthy"
     set last-day-observed-symptoms nobody ;should raise an error if used before being initialized
     set has-done-shopping false

@@ -4,7 +4,8 @@
 
 
 to-report transition-ebo [s]
-write "transition model for ebola"
+;write "transition model for ebola"
+  ;;ADJUST FOR EBOLA
   ;static states: susceptible (healthy), and buried deceased
   if s = susceptible-infection-status [report stochastic-fsm-transition (list (list susceptible-infection-status 1))]
   if s = unsafe-burial-to-removed-infection-status [report stochastic-fsm-transition (list (list unsafe-burial-to-removed-infection-status 1))]
@@ -14,7 +15,9 @@ write "transition model for ebola"
   ;remove triad - so far immediately move to stage 1
   if s = just-exposed-infection-status [report stochastic-fsm-transition (list (list exposed-to-stage-one-infection-status ))]
   if s = exposed-to-stage-one-infection-status [report stochastic-fsm-transition (list (list stage-one-to-stage-two-infection-status ))]
-  
+  if s = stage-one-to-stage-two-infection-status [report stochastic-fsm-transition (list (list stage-one-to-stage-two-infection-status ))]
+  if s = stage-two-to-hospitalised-infection-status [report stochastic-fsm-transition (list (list stage-two-to-hospitalised-infection-status ))]
+  if s = stage-two-to-non-hospitalised-infection-status [report stochastic-fsm-transition (list (list stage-two-to-non-hospitalised-infection-status ))]
 
   if is-timed-state? s and time-of-timed-state s > 0 [
     report stochastic-fsm-transition (list 
@@ -25,8 +28,8 @@ write "transition model for ebola"
   or state-of-timed-state s = non-hospitalized-to-dead-infectious-infection-status
   [ report stochastic-fsm-transition (list (list dead-to-unsafe-burial-infection-status 1))] ;we're only doing unsafe burials for now THIS WILL NEED ADDITIONS LATER
   
-  if s = dead-infection-status [report stochastic-fsm-transition (list (list dead-infection-status 1))]
-  
+ ; if s = dead-infection-status [report stochastic-fsm-transition (list (list dead-infection-status 1))]
+  if s = "infected-stage-2" [print "2"]
   error (sentence "unimplemented" s)
   
 end
