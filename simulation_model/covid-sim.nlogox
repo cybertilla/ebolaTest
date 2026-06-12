@@ -10,24 +10,18 @@ globals [
   day-of-the-week
   is-lockdown-active?
   current-day
- 
  ;keep for now
   #dead-people
   #dead-retired
   #dead-workers
   #dead-students
   #dead-young
-
   away-gathering-point
   #who-became-sick-while-travelling-locally
   import-scenario-name
-  
-  
-  stigma ; define later - urban/rural woman/man etc - will be merged with agents epistemic model and actions, but use for sanity checks until then
 ]
 
 to go
-
   reset-timer
   reset-metrics
 ;  reset-economy-measurements
@@ -45,8 +39,6 @@ to go
   increment-time
   apply-active-measures
   update-metrics
-
-;  if OVERRIDE-ECONOMY?[ FIX-ECONOMY]
   
   ; Tick goes at the end of the go procedure for better plot updating
   tick
@@ -70,10 +62,7 @@ to-report epistemic-accuracy if #infected = 0 [report 1] report count people wit
 to-report epistemic-false-positive-error-ratio report count people with [is-believing-to-be-infected? and not is-infected?] / count people end
 
 to-report epistemic-error-of-ignored-immunity-ratio report count people with [not is-believing-to-be-immune? and not is-immune?] / count people end
-
-;to FIX-ECONOMY
- ; ask people with [my-amount-of-capital < 20] [set my-amount-of-capital 20]
-;end]]></code>
+]]></code>
   <widgets>
     <view x="115" wrappingAllowedX="false" y="59" frameRate="30.0" minPycor="0" height="403" showTickCounter="true" patchSize="7.824" fontSize="10" wrappingAllowedY="false" width="403" tickCounterLabel="ticks" maxPycor="50" updateMode="1" maxPxcor="50" minPxcor="0"></view>
     <button x="13" y="134" height="40" disableUntilTicks="false" forever="true" kind="Observer" width="92" display="go">go
@@ -815,7 +804,7 @@ At the start of each tick, people with less than 20 get 20$, so they don't end-u
     </plot>
     <slider x="1138" step="0.01" y="1076" max="1" width="150" display="density-factor-workplaces" height="50" min="0" direction="Horizontal" default="0.5" variable="density-factor-workplaces"></slider>
     <input x="1051" multiline="false" y="1012" height="60" variable="#workplaces-gp" type="number" width="100">20.0</input>
-    <slider x="2030" step="0.01" y="26" max="1" display="CFR" height="50" min="0" direction="Horizontal" default="0.68" variable="CFR" width="187" sizeVersion="0"></slider>
+    <slider x="2030" step="0.01" y="26" max="1" display="CFR" height="50" min="0" direction="Horizontal" default="0.2" variable="CFR" width="187" sizeVersion="0"></slider>
     <input x="1799" multiline="false" y="153" height="60" variable="symptomatic-to-critical-or-heal" type="number" width="187">7.0</input>
     <input x="1459" multiline="false" y="154" height="60" variable="asympomatic-contagiousness-to-symptomatic-contagiousness" type="number" width="337">16.0</input>
     <input x="2116" multiline="false" y="153" height="60" variable="terminal-to-death" type="number" width="119">7.0</input>

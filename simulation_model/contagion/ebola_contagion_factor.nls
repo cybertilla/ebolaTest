@@ -3,6 +3,7 @@
 
 to spread-by-funeral-rites
  ;placeholder for contagion at funeral rites if extra checks needed
+  
 end
 
 
@@ -33,6 +34,10 @@ to-report infection-scale-factor
   report 1
   ;might need this for gender later
 end
+
+ to-report gamma-interal [start ending]
+   report ebo-cdf-gamma-value-means-6-sd-2.5 start - ebo-cdf-gamma-value-means-6-sd-2.5 ending
+ end
 
 to-report ebo-average-expected-number-of-interactions
   report 5 ;this was previously 3 for assocc, heuristically changing to 5 for now - FIX LATER
