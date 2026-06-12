@@ -195,10 +195,11 @@ to-report is-observing-critical-symptoms?
 ;   or infection-status = pre-symptomatic-to-mild-infection-status
 ;   or infection-status = pre-symptomatic-to-severe-infection-status
 ;   or infection-status = immune-infection-status
-;   or infection-status = dead-infection-status
+
   
   if infection-status = "infected-stage-1"
   or infection-status = "just-contaminated"
+     or infection-status = "dead-infectious"
   
   [report false]
   error (sentence "not implemented for:" infection-status)

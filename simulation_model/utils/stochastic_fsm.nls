@@ -1,3 +1,6 @@
+
+;;TRANSITIONING TO EBOLA, no changes for now
+
 to-report stochastic-fsm-transition [list-of-entries]
   if length last list-of-entries = 1
   [
@@ -35,7 +38,6 @@ to tographviz-fsm [s0 trans-fun]
       foreach states [[x] ->
         set states-to-visit lput x states-to-visit
         print (word (to-dot-string (word "" cur)) "->" (to-dot-string (word "" x)) "[ label=" probability-of-reaching x transition "]")]
-      
     ]
   ]
 end
@@ -43,18 +45,23 @@ end
 to-report states-of [trans]
   report map [ [x] -> first x] trans 
 end
+
+
 to-report probability-of-reaching [it trans]
   report last (item (position it states-of trans) trans)
 end
 
+;state over time
 to-report state-of-timed-state [ts]
   report first ts
 end
 
+;time handling
 to-report time-of-timed-state [ts]
   report last ts
 end
 
+;for logging
 to-report to-dot-string [s]
   report remove " " remove "-" remove "]" remove "[" s
 end

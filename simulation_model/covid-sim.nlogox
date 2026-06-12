@@ -20,6 +20,7 @@ globals [
   import-scenario-name
 ]
 
+
 to go
   reset-timer
   reset-metrics
@@ -810,6 +811,7 @@ At the start of each tick, people with less than 20 get 20$, so they don't end-u
     <slider x="1912" step="0.01" y="255" max="1" display="trust_in_hospital" height="50" min="0" direction="Horizontal" default="0.5" variable="trust_in_hospital" width="250" sizeVersion="0"></slider>
     <note x="22" y="13" backgroundDark="0" fontSize="32" width="271" markdown="false" height="42" textColorDark="-1" textColorLight="-5298144" backgroundLight="0">ASSOCC2EBOLA</note>
     <button x="12" actionKey="S" y="89" height="40" disableUntilTicks="false" forever="false" kind="Observer" width="89" display="setup">setup</button>
+    <switch x="1392" y="40" height="40" on="true" variable="trust-in-institutions" width="139" display="trust-in-institutions"></switch>
   </widgets>
   <info>## WHAT IS IT?
 
