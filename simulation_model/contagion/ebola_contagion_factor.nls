@@ -1,49 +1,51 @@
+;KEEPING GAMMA UPPER CUMULATIVE DISTRIBUTION, ASSUMING DAY 0 IS THE FIRST DAY OF SHOWING SYMPTOMS AS OPPOSED TO FIRST INFECTED AS IN COVID
+;;THIS MODULE NEEDS MORE INPUT
 
-;; WHAT ARE THESE? ok, process when agent infected and contagiousness
+to spread-by-funeral-rites
+ ;placeholder for contagion at funeral rites if extra checks needed
+end
 
-to-report oxford-contagion-factor-between [infector susceptible context]
+
+;;process when agent infected and contagiousness
+;;PROBABILITY OF INFECTION
+to-report ebola-contagion-factor-between [infector susceptible context]
   let t [(ticks - time-when-infected)] of infector
   
-  let I-a-s average-expected-number-of-interactions-for-age [age] of susceptible
+  let I-a-s ebo-average-expected-number-of-interactions ;of susceptible
   
   let integral gamma-interal (t / 4) ((t + 1) / 4)
   
-  let R 5.75 * 2
+  let R 5.75 * 2  ;is this the epidemiological R?
   
-  let s-a-s infection-scale-factor-per-age [age] of susceptible
-  let a-s-i relative-infection-rate-of-infection-status [infection-status] of infector
+  let s-a-s infection-scale-factor ;of susceptible  NOT SURE WHY THIS DOES NOT WORK, MIGHT HAVE SOMETHING TO DO WITH AGENT PROPERTIES
+  let a-s-i ebo-relative-infection-rate-of-infection-status [infection-status] of infector
   let B-n infection-rate-of context
   
   
   let lambda R * S-a-s * A-s-i * B-n * integral / I-a-s
-  
   let result 1 - exp (- lambda)
   
- ; show (sentence "R" R "sas" s-a-s "asi" a-s-i "b" b-n "int" integral "ias" i-a-s "result" result "t" t)
   report result
 end 
 
-
-to-report infection-scale-factor-per-age [ag]
-  if ag = young-age [ report mean (list 0.71  0.74)]
-  if ag = student-age [ report mean (list 0.79)]
-  if ag = worker-age [ report mean (list 0.87 0.98 1.11 1.26)]
-  if ag = retired-age [ report mean (list 1.45 1.66)]
+;;susceptibility age caetgories removed, all equally likely
+to-report infection-scale-factor
+  report 1
+  ;might need this for gender later
 end
 
-to-report average-expected-number-of-interactions-for-age [age-factor]
-  report 3
+to-report ebo-average-expected-number-of-interactions
+  report 5 ;this was previously 3 for assocc, heuristically changing to 5 for now - FIX LATER
 end
-  
 
-to-report gamma-interal [start ending]
-  report cdf-gamma-value-means-6-sd-2.5 start - cdf-gamma-value-means-6-sd-2.5 ending
+to-report ebo-gamma-interal [start ending]
+  report ebo-cdf-gamma-value-means-6-sd-2.5 start - ebo-cdf-gamma-value-means-6-sd-2.5 ending
 end
 
 
-;;im guessing this is a "countdown" because covid is immediately contagious even without symptoms?
-
-to-report cdf-gamma-value-means-6-sd-2.5 [t]
+;;gamma cumulative values kept from assocc
+;;CONTAGIOUSNESS OVER TIME
+to-report ebo-cdf-gamma-value-means-6-sd-2.5 [t]
   
   if(0 = t) [report 1
   ]

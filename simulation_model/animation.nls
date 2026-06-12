@@ -29,11 +29,11 @@ end
 
 to update-people-display
   set color default-color
-  if infection-status = healthy-infection-status
+  if infection-status = susceptible-infection-status
   [set color color + 2]
   if is-infected?
   [set color color ]
-  if infection-status = immune-infection-status
+  if infection-status = hospitalised-to-immune-infection-status
   [set color white]
 
 end
