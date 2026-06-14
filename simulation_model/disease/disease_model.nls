@@ -147,9 +147,10 @@ to-report is-infected-infection-status? [in]
   
   if in = "infected-stage-1"
   or in = "infected-stage-2"
-  or in = "hospitalized"
-    or in = "non-hospitalized"
+  or in = "hospitalised"
+    or in = "non-hospitalised"
     or in = "dead-infectious"
+  or in = "immune"
   
   [report true]
   
@@ -177,8 +178,8 @@ to-report is-observing-critical-symptoms?
 ;   or infection-status = hospital-to-rec-infection-status
     
   
-  if infection-status = "hospitalized"
-  or infection-status = "non-hospitalized"
+  if infection-status = "hospitalised"
+  or infection-status = "non-hospitalised"
   or infection-status = "infected-stage-2"
 
   [report true]
@@ -200,6 +201,7 @@ to-report is-observing-critical-symptoms?
   if infection-status = "infected-stage-1"
   or infection-status = "just-contaminated"
      or infection-status = "dead-infectious"
+       or infection-status = "immune"
   
   [report false]
   error (sentence "not implemented for:" infection-status)

@@ -144,12 +144,12 @@ to-report ebo-relative-infection-rate-of-infection-status [is]
   ;; ADD STATE HERE IF THERE ARE ISOLATION PRACTICES THAT WORK for non-hospitalised
   [report 0.7]
   
-  if is = stage-one-to-non-hospitalised-infection-status
+  if is = stage-two-to-non-hospitalised-infection-status
   or is = stage-one-to-stage-two-infection-status
   or is = stage-two-to-hospitalised-infection-status
   or is = stage-two-to-non-hospitalised-infection-status
-  or is = hospitalized-to-dead-infectious-infection-status 
-  or is = non-hospitalized-to-dead-infectious-infection-status
+  or is = hospitalised-to-dead-infectious-infection-status 
+  or is = non-hospitalised-to-dead-infectious-infection-status
   or is = dead-to-unsafe-burial-infection-status
   [report 1]
   

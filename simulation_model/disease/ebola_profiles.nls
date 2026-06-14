@@ -16,35 +16,47 @@ to-report exposed-to-stage-one-infection-status
 end
 
 to-report stage-one-to-hospitalised-infection-status
-  report "hospitalized"
+  report "hospitalised"
 end
 
-to-report stage-one-to-non-hospitalised-infection-status
-  report "non-hospitalized"
-end
+; to-report stage-one-to-non-hospitalised-infection-status
+;   report "non-hospitalised"
+; end
 
 to-report stage-one-to-stage-two-infection-status
   report "infected-stage-2"
 end
+
+to-report stage-two-infection-status
+  report "infected-stage-2"
+end
   
 to-report stage-two-to-hospitalised-infection-status
-  report "hospitalized"
+  report "hospitalised"
 end
 
 to-report stage-two-to-non-hospitalised-infection-status
-  report "non-hospitalized"
+  report "non-hospitalised"
+end
+
+to-report in-hospital-infection-status
+  report "hospitalised"
 end
 
 to-report hospitalised-to-immune-infection-status
   report "immune"
 end
 
-to-report non-hospitalized-to-dead-infectious-infection-status
+to-report non-hospitalised-to-dead-infectious-infection-status
   report "dead-infectious"
 end
 
-to-report hospitalized-to-dead-infectious-infection-status
+to-report hospitalised-to-dead-infectious-infection-status
   report "dead-infectious"
+end
+
+to-report dead-infection-status
+  report "dead"
 end
 
 to-report dead-to-unsafe-burial-infection-status
@@ -65,5 +77,8 @@ to-report safe-burial-to-removed-infection-status
   report "removed"
 end
 
+to-report removed-infection-status
+  report "removed"
+end
 
 
