@@ -9,7 +9,6 @@ to spread-contagion
   ;spread-by-activity ;mines? wells? markets? church? traditional healer? 
   ;Increase transmission probability per contact with deceased; model funeral cluster events; resistance rate parameter ~40-70% in high-tension zones
   spread-by-funeral-rites ;(safe burials vs unsafe burials, depends on group affiliation and high-tension zones)
-  ;traditional-healing ;UNIMPLEMENTED
   
 end
 
@@ -139,8 +138,10 @@ to-report ebo-relative-infection-rate-of-infection-status [is]
   [report 0.01] ; no symptoms, no contagion - setting this to low chance for now, awaiting data
   
   ;anyone infectious here
-  if is = stage-one-to-hospitalised-infection-status
-  or is = hospitalised-to-immune-infection-status
+  if is = hospitalised-to-immune-infection-status
+  
+  ; or is = stage-one-to-hospitalised-infection-status
+  
   ;; ADD STATE HERE IF THERE ARE ISOLATION PRACTICES THAT WORK for non-hospitalised
   [report 0.7]
   

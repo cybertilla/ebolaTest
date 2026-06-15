@@ -15,9 +15,9 @@ to-report exposed-to-stage-one-infection-status
   report "infected-stage-1"
 end
 
-to-report stage-one-to-hospitalised-infection-status
-  report "hospitalised"
-end
+; to-report stage-one-to-hospitalised-infection-status
+;   report "hospitalised"
+; end
 
 ; to-report stage-one-to-non-hospitalised-infection-status
 ;   report "non-hospitalised"
@@ -44,6 +44,10 @@ to-report in-hospital-infection-status
 end
 
 to-report hospitalised-to-immune-infection-status
+  report "immune"
+end
+
+to-report immune-infection-status
   report "immune"
 end
 

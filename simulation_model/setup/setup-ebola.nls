@@ -1,7 +1,8 @@
+;PLACEHOLDER FOR EBOLA SETUP LOGIC
+
 __includes [ ]
 
-globals[
-]
+globals[]
 
 to setup-ebola
   clear-all
