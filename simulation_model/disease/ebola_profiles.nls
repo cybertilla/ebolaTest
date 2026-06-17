@@ -24,7 +24,7 @@ end
 ; end
 
 to-report stage-one-to-stage-two-infection-status
-  report "infected-stage-2"
+  report "infected-stage-1.5"
 end
 
 to-report stage-two-infection-status

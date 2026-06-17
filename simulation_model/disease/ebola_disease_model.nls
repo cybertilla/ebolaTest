@@ -6,21 +6,20 @@ to-report transition-ebo [s]
 
   ;static states
   if s = susceptible-infection-status [report stochastic-fsm-transition (list (list susceptible-infection-status 1))]
-  print "exposed!"
+  ;;;;print "exposed!"
   ;just exposed transition
   if s = just-exposed-infection-status [report stochastic-fsm-transition (list (list exposed-to-stage-one-infection-status 1))]
-  print "stage 1!"
+  ;;;;print "stage 1!"
   
-  if s = exposed-to-stage-one-infection-status [report stochastic-fsm-transition (list (list stage-one-to-stage-two-infection-status 1))]
-    if s = stage-one-to-stage-two-infection-status [report stochastic-fsm-transition (list (list stage-two-infection-status 1))]
-  
+  if s = exposed-to-stage-one-infection-status [report stochastic-fsm-transition (list (list stage-one-to-stage-two-infection-status 1))] 
+  if s = stage-one-to-stage-two-infection-status [report stochastic-fsm-transition (list (list stage-two-infection-status 1))]
   
   ;time management
   if is-timed-state? s and time-of-timed-state s > 0 [
+    ;print (list (timed-state state-of-timed-state s (time-of-timed-state s - 1)))
     report stochastic-fsm-transition (list 
     (list timed-state state-of-timed-state s (time-of-timed-state s - 1)))
   ]
-  
  
   ;stage 1 to stage 2
  ; if state-of-timed-state s = exposed-to-stage-one-infection-status [report stochastic-fsm-transition (list (list stage-one-to-stage-two-infection-status tau-sym-ebo p-s1))]
@@ -31,17 +30,17 @@ to-report transition-ebo [s]
   ;print "stages 2 to 2"
   
   ;to go to the hospital or not to go
-  if state-of-timed-state s = stage-two-infection-status [
-
+  ;if state-of-timed-state s = stage-two-infection-status [
+  if s = stage-two-infection-status[
     report stochastic-fsm-transition (list 
       (list timed-state stage-two-to-non-hospitalised-infection-status tau-hosp ( 1 - p-hosp ))
       (list timed-state stage-two-to-hospitalised-infection-status tau-hosp p-hosp)
   )
-    print "hospital choice"
+    
   ]
   
   ;hospital to recovery or death (CFR)
-  if state-of-timed-state s = in-hospital-infection-status [
+  if s = in-hospital-infection-status or state-of-timed-state s = in-hospital-infection-status [
     report stochastic-fsm-transition (list
     (list timed-state hospitalised-to-immune-infection-status tau-rec (1 - p-mortality-in-hospital))
     (list timed-state hospitalised-to-dead-infectious-infection-status tau-hospital-to-death p-mortality-in-hospital)
@@ -49,19 +48,28 @@ to-report transition-ebo [s]
   ]
   
   ;death to burials
-  if state-of-timed-state s =  dead-infection-status [report stochastic-fsm-transition (list
+  if s =  dead-infection-status or state-of-timed-state s = dead-infection-status 
+  or s = non-hospitalised-to-dead-infectious-infection-status or state-of-timed-state s = non-hospitalised-to-dead-infectious-infection-status
+  or s = hospitalised-to-dead-infectious-infection-status or state-of-timed-state s = hospitalised-to-dead-infectious-infection-status
+  [report stochastic-fsm-transition (list
     (list timed-state dead-to-unsafe-burial-infection-status tau-bur (1 - p-safe-burial))
     (list timed-state dead-to-safe-burial-infection-status tau-bur p-safe-burial)
   )
   ]
   
+  ;burials (Emil added)
+  if s = dead-to-safe-burial-infection-status or state-of-timed-state s = dead-to-safe-burial-infection-status
+  [report stochastic-fsm-transition (list (list safe-burial-to-removed-infection-status 1))]
+  if s = dead-to-unsafe-burial-infection-status or state-of-timed-state s = dead-to-unsafe-burial-infection-status
+  [report stochastic-fsm-transition (list (list unsafe-burial-to-removed-infection-status 1))]
+  
     ;burials to removed
-  if state-of-timed-state s = unsafe-burial-to-removed-infection-status
-  or state-of-timed-state s = safe-burial-to-removed-infection-status
+  if s = unsafe-burial-to-removed-infection-status or state-of-timed-state s = unsafe-burial-to-removed-infection-status
+  or s = safe-burial-to-removed-infection-status or state-of-timed-state s = safe-burial-to-removed-infection-status
   [report stochastic-fsm-transition (list (list removed-infection-status 1))]
 
-    if state-of-timed-state s = stage-two-to-non-hospitalised-infection-status
-    [report stochastic-fsm-transition (list (list non-hospitalised-to-dead-infectious-infection-status 1))]
+  if s = stage-two-to-non-hospitalised-infection-status or state-of-timed-state s = stage-two-to-non-hospitalised-infection-status
+  [report stochastic-fsm-transition (list (list non-hospitalised-to-dead-infectious-infection-status 1))]
   
   
   error (sentence "unimplemented" s)

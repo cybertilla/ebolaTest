@@ -41,7 +41,6 @@ to spread-within-a-set-of-people [ts context]
   
   ;;quite ugly solution. Contact points should be stored in different structures & processes
   update-contacts-of-a-set-of-people-in-contact-tracing-app-public-measure ts
-  
   let susceptible-people ts with [is-susceptible?]
   let contagious-people-in-the-set  ts with [is-contagious?] 
   ask contagious-people-in-the-set [
@@ -130,12 +129,16 @@ to-report ebo-relative-infection-rate-of-infection-status [is]
   is = susceptible-infection-status or
   is = dead-to-safe-burial-infection-status or
   is = unsafe-burial-to-removed-infection-status or
-  is = safe-burial-to-removed-infection-status
+  is = safe-burial-to-removed-infection-status or
+  is = "healthy"
   [report 0]
   
 
   if is = exposed-to-stage-one-infection-status 
   [report 0.01] ; no symptoms, no contagion - setting this to low chance for now, awaiting data
+  
+  if is = stage-two-infection-status ;Emil added
+  [report 0.5]
   
   ;anyone infectious here
   if is = hospitalised-to-immune-infection-status
@@ -154,7 +157,9 @@ to-report ebo-relative-infection-rate-of-infection-status [is]
   or is = dead-to-unsafe-burial-infection-status
   [report 1]
   
-  error (sentence "not implemented" infection-status)
+  if is = "healthy" [print "something concurrency problem?"]
+  
+  error (sentence "not implemented" infection-status is)
 end
 
 

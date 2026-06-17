@@ -93,6 +93,7 @@ end
   or in = "removed"
   or in = "non-hospitalised"
   or in = "infected-stage-2"
+  or in = "infected-stage-1.5"
   or in = "infected-stage-1"
   or in = "just-contaminated"
   or in = "removed"
@@ -115,6 +116,7 @@ to-report is-severe-infection-state? [in]
   
 if in = "healthy"
   or in = "infected-stage-1"
+  or in = "infected-stage-1.5"
   or in = "immune"
   or in = "just-contaminated"
   or in = "removed"
@@ -133,15 +135,18 @@ to-report is-infected-infection-status? [in]
   if is-timed-state? in [report is-infected-infection-status? state-of-timed-state in]
   
   if in = "infected-stage-1"
+  or in = "infected-stage-1.5"
   or in = "infected-stage-2"
   or in = "hospitalised"
   or in = "non-hospitalised"
   or in = "dead-infectious"
+  or in = "unsafe-burial" ;Emil added
   or in = "immune"  
   [report true]
   
   if in = "just-contaminated"
   or in = "susceptible"
+  or in = "safe-burial" ;Emil added
   or in = "removed"
   or in = "healthy"
   [report false]
@@ -152,14 +157,17 @@ end
 
 to-report is-observing-critical-symptoms?  
   if infection-status = "hospitalised"
- ; or infection-status = "non-hospitalised"
+  or infection-status = "non-hospitalised"
   or infection-status = "infected-stage-2"
   [report true]
   
   if infection-status = "infected-stage-1"
+  or infection-status = "infected-stage-1.5"
   or infection-status = "just-contaminated"
-     or infection-status = "dead-infectious"
-       or infection-status = "immune"
+  or infection-status = "dead-infectious"
+  or infection-status = "safe-burial" ;Emil added
+  or infection-status = "unsafe-burial" ;Emil added
+  or infection-status = "immune"
   [report false]
   
   
