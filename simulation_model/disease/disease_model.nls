@@ -85,7 +85,7 @@ end
  to-report is-hospitalised-infection-state? [in]
    if is-timed-state? in [report is-infected-infection-status? state-of-timed-state in]
    if in = "hospitalised"
-  or in = hospitalised-to-immune-infection-status
+  or in = "h-to-immune"
   or in = hospitalised-to-dead-infectious-infection-status
    [report true]
   
@@ -118,6 +118,7 @@ if in = "healthy"
   or in = "infected-stage-1"
   or in = "infected-stage-1.5"
   or in = "immune"
+    or in = "h-to-immune"
   or in = "just-contaminated"
   or in = "removed"
   or in = "dead-infectious"
@@ -141,12 +142,14 @@ to-report is-infected-infection-status? [in]
   or in = "non-hospitalised"
   or in = "dead-infectious"
   or in = "unsafe-burial" ;Emil added
+    or in = "h-to-immune"
   or in = "immune"  
   [report true]
   
   if in = "just-contaminated"
   or in = "susceptible"
   or in = "safe-burial" ;Emil added
+
   or in = "removed"
   or in = "healthy"
   [report false]
@@ -167,6 +170,7 @@ to-report is-observing-critical-symptoms?
   or infection-status = "dead-infectious"
   or infection-status = "safe-burial" ;Emil added
   or infection-status = "unsafe-burial" ;Emil added
+    or infection-status = "h-to-immune"
   or infection-status = "immune"
   [report false]
   

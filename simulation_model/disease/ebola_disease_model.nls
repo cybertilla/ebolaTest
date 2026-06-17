@@ -2,6 +2,11 @@
 ;BASIC EBOLA IMPLEMENTATION, disease progression
   ;everyexposed will develop symptoms
 ;assuming people who do not go to the hospital will not survive
+
+; FIX tau-nh-to-death
+
+
+
 to-report transition-ebo [s]
 
   ;static states
@@ -12,7 +17,10 @@ to-report transition-ebo [s]
   ;;;;print "stage 1!"
   
   if s = exposed-to-stage-one-infection-status [report stochastic-fsm-transition (list (list stage-one-to-stage-two-infection-status 1))] 
+  
   if s = stage-one-to-stage-two-infection-status [report stochastic-fsm-transition (list (list stage-two-infection-status 1))]
+  
+ if s = immune-infection-status [report stochastic-fsm-transition (list (list immune-infection-status 1))]
   
   ;time management
   if is-timed-state? s and time-of-timed-state s > 0 [
@@ -42,10 +50,13 @@ to-report transition-ebo [s]
   ;hospital to recovery or death (CFR)
   if s = in-hospital-infection-status or state-of-timed-state s = in-hospital-infection-status [
     report stochastic-fsm-transition (list
-    (list timed-state hospitalised-to-dead-infectious-infection-status tau-hospital-to-death p-mortality-in-hospital)
+    (list timed-state hospitalised-to-dead-infectious-infection-status tau-h-to-death p-mortality-in-hospital)
     (list timed-state hospitalised-to-immune-infection-status tau-rec)
   )
   ]
+  
+  ;to immunity
+     if s = in-hospital-infection-status or state-of-timed-state s = hospitalised-to-immune-infection-status [report stochastic-fsm-transition (list (list immune-infection-status 1))]
   
   ;death to burials
 ;  if s =  dead-infection-status or state-of-timed-state s = dead-infection-status 
@@ -65,7 +76,7 @@ to-report transition-ebo [s]
   
     ;burials to removed
   if s = unsafe-burial-to-removed-infection-status or state-of-timed-state s = unsafe-burial-to-removed-infection-status
-  or s = safe-burial-to-removed-infection-status or state-of-timed-state s = safe-burial-to-removed-infection-status
+  ;or s = safe-burial-to-removed-infection-status or state-of-timed-state s = safe-burial-to-removed-infection-status
   [report stochastic-fsm-transition (list (list removed-infection-status 1))]
 
   if s = stage-two-to-non-hospitalised-infection-status or state-of-timed-state s = stage-two-to-non-hospitalised-infection-status
@@ -91,22 +102,19 @@ end
 
 
 ;these numbers are made up and need to be calibrated later
-to-report p-s1
-  report 1 ; ALL INFECTED WILL PROCEED TO STAGE ONE
-end
+; to-report p-s1
+;   report 1 ; ALL INFECTED WILL PROCEED TO STAGE ONE
+; end
 
-to-report p-s2
-  report 1
-end
+; to-report p-s2
+;   report 1
+; end
 
 to-report p-hosp
   ;INSTEAD OF AGE, THIS DEPENDS ON TRUST IN HOSPITAL SLIDER VALUE
   report trust_in_hospital ;expand this later, good for testing now
 end
 
-to-report p-no-hosp
-  report 1 - trust_in_hospital
-end
 
 ;probability of survival, using the inverse of latest case fatality rate, adjust as more accurate data comes in
 to-report p-mortality-in-hospital
@@ -130,25 +138,32 @@ end
 
 
 ;one day to develop severe symptoms
-to-report tau-s2
-  report 1 * #ticks-per-day
-end
+; to-report tau-s2
+;   report 1 * #ticks-per-day
+; end
 
 to-report tau-hosp
-  report 3  * #ticks-per-day
+  report 1  * #ticks-per-day
 end
 
 ;how log does it take for a person to die in hosp
-to-report tau-hospital-to-death
+to-report tau-h-to-death
   report 10 * #ticks-per-day
+end
+
+to-report tau-nh-to-death
+  let mean-val ((10 + 19) / 2)
+  let variance-val 3
+  report round (random-gamma (mean-val * mean-val / variance-val) (1 / (variance-val / mean-val)))  * #ticks-per-day 
 end
 
 
 ;it takes very long for a patient to recover
 to-report tau-rec
-  let mean-val ((59 + 270) / 2)
-  let variance-val 50
-  report round (random-gamma (mean-val * mean-val / variance-val) (1 / (variance-val / mean-val)))  * #ticks-per-day
+    report 12 * #ticks-per-day
+;   let mean-val ((59 + 270) / 2)
+;   let variance-val 50
+;   report round (random-gamma (mean-val * mean-val / variance-val) (1 / (variance-val / mean-val)))  * #ticks-per-day
 end
 
 

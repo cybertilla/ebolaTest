@@ -44,7 +44,7 @@ to-report in-hospital-infection-status
 end
 
 to-report hospitalised-to-immune-infection-status
-  report "immune"
+  report "h-to-immune"
 end
 
 to-report immune-infection-status

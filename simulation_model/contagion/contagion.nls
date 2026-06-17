@@ -141,8 +141,8 @@ to-report ebo-relative-infection-rate-of-infection-status [is]
   [report 0.5]
   
   ;anyone infectious here
-  if is = hospitalised-to-immune-infection-status
-  
+  if is = hospitalised-to-immune-infection-status or
+  is = "immune"  
   ; or is = stage-one-to-hospitalised-infection-status
   
   ;; ADD STATE HERE IF THERE ARE ISOLATION PRACTICES THAT WORK for non-hospitalised
@@ -157,7 +157,7 @@ to-report ebo-relative-infection-rate-of-infection-status [is]
   or is = dead-to-unsafe-burial-infection-status
   [report 1]
   
-  if is = "healthy" [print "something concurrency problem?"]
+;  if is = "healthy" [print "something concurrency problem?"]
   
   error (sentence "not implemented" infection-status is)
 end
