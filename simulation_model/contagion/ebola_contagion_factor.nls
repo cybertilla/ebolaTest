@@ -2,8 +2,7 @@
 ;;THIS MODULE NEEDS MORE INPUT
 
 to spread-by-funeral-rites
- ;placeholder for contagion at funeral rites if extra checks needed
-  
+ ;placeholder for contagion at funeral rites if extra checks needed  
 end
 
 
@@ -14,7 +13,7 @@ to-report ebola-contagion-factor-between [infector susceptible context]
   
   let I-a-s ebo-average-expected-number-of-interactions ;of susceptible
   
-  let integral gamma-interal (t / 4) ((t + 1) / 4)
+  let integral ebo-gamma-interal (t / 4) ((t + 1) / 4)
   
   let R 5.75 * 2  ;is this the epidemiological R?
   
@@ -34,10 +33,6 @@ to-report infection-scale-factor
   report 1
   ;might need this for gender later
 end
-
- to-report gamma-interal [start ending]
-   report ebo-cdf-gamma-value-means-6-sd-2.5 start - ebo-cdf-gamma-value-means-6-sd-2.5 ending
- end
 
 to-report ebo-average-expected-number-of-interactions
   report 5 ;this was previously 3 for assocc, heuristically changing to 5 for now - FIX LATER
